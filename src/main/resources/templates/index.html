@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${name} + ' | Personal Portfolio'">Portfolio</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet"/>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════╗
+     ║           NAVBAR                 ║
+     ╚══════════════════════════════════╝ -->
+<nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="#hero">
+            &lt;<span th:text="${name.split(' ')[0]}">Dev</span> /&gt;
+        </a>
+        <button class="navbar-toggler border-0" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navMenu"
+                style="color:#fff;">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="btn-primary-custom ms-3" style="font-size:0.9rem;padding:0.55rem 1.5rem;">
+                Hire Me <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ╔══════════════════════════════════╗
+     ║           HERO SECTION           ║
+     ╚══════════════════════════════════╝ -->
+<section id="hero">
+    <!-- Animated blobs -->
+    <div class="hero-bg-blur blob-1"></div>
+    <div class="hero-bg-blur blob-2"></div>
+    <div class="hero-bg-blur blob-3"></div>
+
+    <div class="container position-relative">
+        <div class="row align-items-center g-5">
+            <!-- Left content -->
+            <div class="col-lg-7" data-aos="fade-right" data-aos-duration="900">
+                <p class="hero-greeting">
+                    <i class="fas fa-hand-sparkles me-2"></i>Hello, World!
+                </p>
+                <h1 class="hero-name" th:text="${name}">Arun Kumar</h1>
+                <div class="hero-title">
+                    <span id="typed-text"></span><span class="typed-cursor">|</span>
+                </div>
+                <p class="hero-desc" th:text="${bio}">Bio text here.</p>
+
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <a href="#projects" class="btn-primary-custom">
+                        <i class="fas fa-folder-open me-2"></i>View Projects
+                    </a>
+                    <a href="#contact" class="btn-outline-custom">
+                        <i class="fas fa-paper-plane me-2"></i>Contact Me
+                    </a>
+                </div>
+
+                <!-- Social icons -->
+                <div class="hero-socials d-flex gap-2">
+                    <a th:href="${github}" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a th:href="${linkedin}" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a th:href="${twitter}" target="_blank" title="Twitter">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a th:href="'mailto:' + ${email}" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right card -->
+            <div class="col-lg-5" data-aos="fade-left" data-aos-duration="900" data-aos-delay="200">
+                <div class="hero-avatar-card">
+                    <!-- Avatar -->
+                    <div class="avatar-circle">
+                        <span th:text="${name.substring(0,1)}">A</span>
+                        <div class="avatar-online"></div>
+                    </div>
+                    <h4 class="mb-1 fw-700" style="font-family:'Poppins',sans-serif;"
+                        th:text="${name}">Arun Kumar</h4>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1.5rem;"
+                       th:text="${title}">Full Stack Developer</p>
+
+                    <!-- Stats -->
+                    <div class="d-flex gap-2">
+                        <div class="stat-badge">
+                            <div class="stat-number" th:text="${yearsOfExperience} + '+'">5+</div>
+                            <div class="stat-label">Yrs Exp</div>
+                        </div>
+                        <div class="stat-badge">
+                            <div class="stat-number" th:text="${projectsCompleted} + '+'">30+</div>
+                            <div class="stat-label">Projects</div>
+                        </div>
+                        <div class="stat-badge">
+                            <div class="stat-number" th:text="${happyClients} + '+'">20+</div>
+                            <div class="stat-label">Clients</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════╗
+     ║           ABOUT SECTION          ║
+     ╚══════════════════════════════════╝ -->
+<section id="about">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <!-- Left - large initial -->
+            <div class="col-lg-5" data-aos="fade-right" data-aos-duration="800">
+                <div style="background:var(--dark);border:1px solid var(--dark-border);border-radius:24px;
+                            padding:3rem;text-align:center;">
+                    <div style="width:180px;height:180px;border-radius:50%;
+                                background:linear-gradient(135deg,var(--primary),var(--secondary));
+                                margin:0 auto 1.5rem;display:flex;align-items:center;
+                                justify-content:center;font-size:5.5rem;color:#fff;font-weight:700;">
+                        <span th:text="${name.substring(0,1)}">A</span>
+                    </div>
+                    <h3 style="font-family:'Poppins',sans-serif;font-weight:700;"
+                        th:text="${name}">Arun Kumar</h3>
+                    <p style="color:var(--primary);font-weight:500;" th:text="${title}">Full Stack Developer</p>
+                    <div style="background:rgba(67,233,123,0.1);border:1px solid rgba(67,233,123,0.3);
+                                border-radius:50px;padding:0.4rem 1.2rem;display:inline-block;
+                                color:var(--accent);font-size:0.85rem;font-weight:600;">
+                        <span style="width:8px;height:8px;background:var(--accent);border-radius:50%;
+                                     display:inline-block;margin-right:6px;animation:blink 1s infinite;"></span>
+                        Available for Work
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right - info -->
+            <div class="col-lg-7" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
+                <span class="section-tag">About Me</span>
+                <h2 class="section-title">Crafting Digital <span>Experiences</span></h2>
+                <div class="section-divider"></div>
+                <p style="color:var(--text-secondary);line-height:1.9;font-size:1rem;margin-bottom:2rem;"
+                   th:text="${bio}">Bio text.</p>
+
+                <!-- Info items -->
+                <div class="about-info-item">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <div class="info-label">Email</div>
+                        <div class="info-value" th:text="${email}">email@example.com</div>
+                    </div>
+                </div>
+                <div class="about-info-item">
+                    <div class="info-icon"><i class="fas fa-phone"></i></div>
+                    <div>
+                        <div class="info-label">Phone</div>
+                        <div class="info-value" th:text="${phone}">+91 XXXXX</div>
+                    </div>
+                </div>
+                <div class="about-info-item">
+                    <div class="info-icon"><i class="fas fa-location-dot"></i></div>
+                    <div>
+                        <div class="info-label">Location</div>
+                        <div class="info-value" th:text="${location}">City, Country</div>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <a href="#" class="btn-primary-custom" download>
+                        <i class="fas fa-download me-2"></i>Download CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════╗
+     ║           SKILLS SECTION         ║
+     ╚══════════════════════════════════╝ -->
+<section id="skills">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-tag">What I Know</span>
+            <h2 class="section-title">My <span>Technical Skills</span></h2>
+            <div class="section-divider mx-auto"></div>
+            <p style="color:var(--text-secondary);max-width:540px;margin:0 auto;">
+                Technologies and tools I've worked with to bring ideas to life.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div th:each="skill, stat : ${skills}"
+                 class="col-6 col-md-4 col-lg-3"
+                 data-aos="zoom-in"
+                 th:attr="data-aos-delay=${stat.index * 60}">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i th:class="${skill.icon}"></i>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="skill-name" th:text="${skill.name}">Skill</span>
+                        <span class="skill-pct" th:text="${skill.level} + '%'">0%</span>
+                    </div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" th:attr="data-level=${skill.level}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════╗
+     ║         EXPERIENCE SECTION       ║
+     ╚══════════════════════════════════╝ -->
+<section id="experience">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-tag">Career</span>
+            <h2 class="section-title">Work <span>Experience</span></h2>
+            <div class="section-divider mx-auto"></div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="timeline">
+                    <div th:each="exp, stat : ${experiences}"
+                         class="timeline-item"
+                         data-aos="fade-up"
+                         th:attr="data-aos-delay=${stat.index * 100}">
+                        <div class="timeline-card">
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div style="width:44px;height:44px;border-radius:12px;
+                                            background:rgba(108,99,255,0.15);
+                                            display:flex;align-items:center;
+                                            justify-content:center;color:var(--primary);flex-shrink:0;">
+                                    <i th:class="${exp.logoIcon}"></i>
+                                </div>
+                                <div>
+                                    <div class="timeline-role" th:text="${exp.role}">Role</div>
+                                    <div class="timeline-company" th:text="${exp.company}">Company</div>
+                                </div>
+                            </div>
+                            <div class="timeline-period" th:text="${exp.period}">Period</div>
+                            <p class="timeline-desc mb-0" th:text="${exp.description}">Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════╗
+     ║          PROJECTS SECTION        ║
+     ╚══════════════════════════════════╝ -->
+<section id="projects">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-tag">Portfolio</span>
+            <h2 class="section-title">Featured <span>Projects</span></h2>
+            <div class="section-divider mx-auto"></div>
+            <p style="color:var(--text-secondary);max-width:540px;margin:0 auto;">
+                A selection of projects I've built — from concept to deployment.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div th:each="project, stat : ${projects}"
+                 class="col-md-6 col-lg-6"
+                 data-aos="fade-up"
+                 th:attr="data-aos-delay=${stat.index * 100}">
+                <div class="project-card">
+                    <div class="project-card-header">
+                        <div class="project-icon-wrap" th:class="'project-icon-wrap ' + ${project.gradient}">
+                            <i th:class="${project.icon}"></i>
+                        </div>
+                        <h5 class="project-title mb-0" th:text="${project.title}">Project</h5>
+                    </div>
+                    <div class="project-card-body">
+                        <p class="project-desc" th:text="${project.description}">Desc</p>
+                        <!-- Tech tags -->
+                        <div>
+                            <span th:each="tech : ${project.techStack.split('·')}"
+                                  class="project-tech-tag"
+                                  th:text="${tech.trim()}">Tech</span>
+                        </div>
+                    </div>
+                    <div class="project-card-footer">
+                        <a th:href="${project.githubUrl}" target="_blank"
+                           class="project-link project-link-github">
+                            <i class="fab fa-github me-1"></i>GitHub
+                        </a>
+                        <a th:href="${project.liveUrl}" target="_blank"
+                           class="project-link project-link-live">
+                            <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════╗
+     ║          CONTACT SECTION         ║
+     ╚══════════════════════════════════╝ -->
+<section id="contact">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="section-tag">Get In Touch</span>
+            <h2 class="section-title">Let's <span>Work Together</span></h2>
+            <div class="section-divider mx-auto"></div>
+            <p style="color:var(--text-secondary);max-width:540px;margin:0 auto;">
+                Have a project in mind? Let's connect and bring your ideas to life.
+            </p>
+        </div>
+
+        <div class="row g-5 align-items-start">
+            <!-- Left: contact info -->
+            <div class="col-lg-5" data-aos="fade-right" data-aos-duration="800">
+                <h4 style="font-family:'Poppins',sans-serif;font-weight:600;margin-bottom:1.5rem;">
+                    Contact Information
+                </h4>
+
+                <a th:href="'mailto:' + ${email}" class="contact-info-card">
+                    <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <div class="contact-info-label">Email</div>
+                        <div class="contact-info-value" th:text="${email}">email</div>
+                    </div>
+                </a>
+                <a th:href="'tel:' + ${phone}" class="contact-info-card">
+                    <div class="contact-info-icon"><i class="fas fa-phone"></i></div>
+                    <div>
+                        <div class="contact-info-label">Phone</div>
+                        <div class="contact-info-value" th:text="${phone}">phone</div>
+                    </div>
+                </a>
+                <div class="contact-info-card" style="cursor:default;">
+                    <div class="contact-info-icon"><i class="fas fa-location-dot"></i></div>
+                    <div>
+                        <div class="contact-info-label">Location</div>
+                        <div class="contact-info-value" th:text="${location}">location</div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1rem;">
+                        Connect on social media
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a th:href="${github}" target="_blank" class="social-link-btn" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a th:href="${linkedin}" target="_blank" class="social-link-btn" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a th:href="${twitter}" target="_blank" class="social-link-btn" title="Twitter">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
+                        <a th:href="'mailto:' + ${email}" class="social-link-btn" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: form -->
+            <div class="col-lg-7" data-aos="fade-left" data-aos-duration="800" data-aos-delay="150">
+                <div class="contact-form-card">
+                    <h4 style="font-family:'Poppins',sans-serif;font-weight:600;margin-bottom:1.75rem;">
+                        Send a Message
+                    </h4>
+                    <form>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Your Name</label>
+                                <input type="text" class="form-control-custom"
+                                       placeholder="John Doe"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Email Address</label>
+                                <input type="email" class="form-control-custom"
+                                       placeholder="john@example.com"/>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Subject</label>
+                            <input type="text" class="form-control-custom"
+                                   placeholder="Project Discussion"/>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label-custom">Message</label>
+                            <textarea rows="5" class="form-control-custom"
+                                      placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary-custom w-100"
+                                style="border-radius:12px;text-align:center;">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════╗
+     ║            FOOTER                ║
+     ╚══════════════════════════════════╝ -->
+<footer>
+    <div class="container">
+        <p>
+            Crafted with <span><i class="fas fa-heart"></i></span> by
+            <span th:text="${name}">Arun Kumar</span> &nbsp;·&nbsp;
+            Built with <span>Spring Boot</span> &amp; <span>Thymeleaf</span>
+        </p>
+    </div>
+</footer>
+
+<!-- Scroll to top -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'});">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- ============================================================
+     JS DEPENDENCIES
+     ============================================================ -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+/* ── Init AOS ──────────────────────────────────────── */
+AOS.init({ once: true, offset: 80 });
+
+/* ── Navbar scroll effect ──────────────────────────── */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+    const btn = document.getElementById('scrollTop');
+    btn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+});
+
+/* ── Skill bar animation on scroll ────────────────── */
+const skillBars = document.querySelectorAll('.skill-bar-fill');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const el = entry.target;
+            el.style.width = el.dataset.level + '%';
+            observer.unobserve(el);
+        }
+    });
+}, { threshold: 0.3 });
+skillBars.forEach(bar => observer.observe(bar));
+
+/* ── Typed text effect ─────────────────────────────── */
+const phrases = ['Full Stack Developer', 'Spring Boot Expert', 'UI/UX Enthusiast', 'Problem Solver'];
+let phraseIdx = 0, charIdx = 0, deleting = false;
+const typedEl = document.getElementById('typed-text');
+
+function type() {
+    const current = phrases[phraseIdx];
+    if (!deleting) {
+        typedEl.textContent = current.slice(0, ++charIdx);
+        if (charIdx === current.length) {
+            setTimeout(() => { deleting = true; type(); }, 2000);
+            return;
+        }
+    } else {
+        typedEl.textContent = current.slice(0, --charIdx);
+        if (charIdx === 0) {
+            deleting = false;
+            phraseIdx = (phraseIdx + 1) % phrases.length;
+        }
+    }
+    setTimeout(type, deleting ? 60 : 100);
+}
+type();
+</script>
+</body>
+</html>
+
