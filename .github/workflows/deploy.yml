@@ -2,7 +2,7 @@ name: Deploy Spring Boot to VPS
 
 on:
   push:
-    branches: [ "main" ] # Triggers only on pushes to the main branch
+    branches: [ "main" ]
 
 jobs:
   build-and-deploy:
@@ -14,12 +14,21 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '21' # Match your project's Java version
+          java-version: '21'
           distribution: 'temurin'
           cache: maven
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
+
+      - name: Stop Service before Transfer
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT }}
+          script: sudo systemctl stop personal-info || true
 
       - name: Copy JAR to VPS via SCP
         uses: appleboy/scp-action@v0.1.7
@@ -28,12 +37,12 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
-          # Path to your built JAR (update if your name/version differs)
           source: "target/personalinfo-0.0.1-SNAPSHOT.jar"
           target: "/root/personal_info"
           strip_components: 1
+          overwrite: true # Ensures the old JAR is replaced
 
-      - name: Restart Application via SSH
+      - name: Start and Restart Application
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -41,6 +50,8 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
           script: |
-            # Restart the systemd service you created earlier
+            sudo systemctl daemon-reload
+            sudo systemctl enable personal-info
             sudo systemctl restart personal-info
+
 
