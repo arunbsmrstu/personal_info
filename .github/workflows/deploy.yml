@@ -38,7 +38,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
           source: "target/personalinfo-0.0.1-SNAPSHOT.jar"
-          target: "personal_info"
+          target: "/root/personal_info"
           strip_components: 1
           overwrite: true # Ensures the old JAR is replaced
 
@@ -50,8 +50,9 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
           script: |
+            sudo systemctl stop personal-info || true
+            sudo fuser -k 8090/tcp || true
             sudo systemctl daemon-reload
-            sudo systemctl enable personal-info
-            sudo systemctl restart personal-info
+            sudo systemctl start personal-info
 
 
