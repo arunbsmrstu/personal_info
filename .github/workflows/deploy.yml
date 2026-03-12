@@ -38,7 +38,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
           source: "target/personalinfo-0.0.1-SNAPSHOT.jar"
-          target: "/root/personal_info"
+          target: "personal_info"
           strip_components: 1
           overwrite: true # Ensures the old JAR is replaced
 
